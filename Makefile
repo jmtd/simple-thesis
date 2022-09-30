@@ -31,6 +31,15 @@ standalone: $(STANDALONE:.tex=.pdf)
 	latexmk -auxdir=$(@D) -pdf \
 		-pdflatex="pdflatex --output-directory $(@D) %O %S" $^
 
+# fake cleanup targets
+$(addprefix clean-,$(STANDALONE)):
+	latexmk -auxdir=$(subst clean-,,$(@D)) -c $(subst clean-,,$@)
+
+$(addprefix purge-,$(STANDALONE)):
+	latexmk -auxdir=$(subst purge-,,$(@D)) -C $(subst purge-,,$@)
+
+.PHONY: $(addprefix clean-,$(STANDALONE)) $(addprefix purge-,$(STANDALONE))
+
 ##############################################################################
 
 thesis.pdf: wordcount.abstract wordcount.summary wordcount.total $(SOURCES)
