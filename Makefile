@@ -15,14 +15,14 @@ OTHER_SOURCES := \
 
 SOURCES := $(TEXT_SOURCES) $(OTHER_SOURCES)
 
-all: thesis.pdf wordcount.txt
+all: thesis.pdf wordcount.txt $(STANDALONE)
 
 ##############################################################################
 # rules for building standalone chapters.
 
 STANDALONE := $(wildcard */*-standalone.tex)
 
-standalone: $(STANDALONE)
+standalone: $(STANDALONE:.tex=.pdf)
 
 %-standalone.pdf: %-standalone.tex
 	# latexmk passes -auxdir= to pdflatex, which doesn't understand it,
