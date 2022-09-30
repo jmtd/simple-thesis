@@ -26,10 +26,8 @@ standalone: $(STANDALONE:.tex=.pdf)
 
 %-standalone.pdf: %-standalone.tex
 	# latexmk passes -auxdir= to pdflatex, which doesn't understand it,
-	# so we also need to define -pdflatex=. (leave -auxdir= in case some
-	# other tool does understand it, and/or we need it for clean up)
-	latexmk -auxdir=$(@D) -pdf \
-		-pdflatex="pdflatex --output-directory $(@D) %O %S" $^
+	# so we need to redfine -pdflatex= instead.
+	latexmk -pdf -pdflatex="pdflatex --output-directory $(@D) %O %S" $^
 
 # fake cleanup targets
 $(addprefix clean-,$(STANDALONE)):
