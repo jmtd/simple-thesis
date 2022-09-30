@@ -17,6 +17,22 @@ SOURCES := $(TEXT_SOURCES) $(OTHER_SOURCES)
 
 all: thesis.pdf wordcount.txt
 
+##############################################################################
+# rules for building standalone chapters.
+
+STANDALONE := $(wildcard */*-standalone.tex)
+
+standalone: $(STANDALONE)
+
+%-standalone.pdf: %-standalone.tex
+	# latexmk passes -auxdir= to pdflatex, which doesn't understand it,
+	# so we also need to define -pdflatex=. (leave -auxdir= in case some
+	# other tool does understand it, and/or we need it for clean up)
+	latexmk -auxdir=$(@D) -pdf \
+		-pdflatex="pdflatex --output-directory $(@D) %O %S" $^
+
+##############################################################################
+
 thesis.pdf: wordcount.abstract wordcount.summary wordcount.total $(SOURCES)
 	latexmk --pdf
 
@@ -49,4 +65,4 @@ purge:
 	      *.tdo       \
 	      *.xml
 
-.PHONY: all clean purge
+.PHONY: all clean purge standalone
