@@ -73,13 +73,14 @@
 % Acronyms and abbreviations -----------------------------------------------------------
 
 \RequirePackage[
-    acronym,
+    abbreviations,% create list of abbreviations
+    symbols,% create list of symbols
     toc,  % include in table of contents
     nogroupskip, % do not split into alphabetical groups
     nopostdot,  % do not terminate definitions with a full stop
     nonumberlist,  % do not include hyperlinks to text
     style=super,  % format acronyms page
-]{glossaries}
+]{glossaries-extra}
 \newglossary[nlg]{notation}{not}{ntn}{Notation}  % for notation
 \loadglsentries[notation]{notation/notation}  % load notation entries
 \makeglossaries
